@@ -25,9 +25,7 @@ import java.util.UUID;
 
 @Controller
 @RequestMapping("/products")
-
 public class ProductController {
-
     @Autowired
     private ProductService productService;
     @Autowired
