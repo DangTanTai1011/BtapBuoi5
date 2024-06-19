@@ -96,11 +96,21 @@ public class ProductController {
     }
     // Process the form for updating a product
     @PostMapping("/update/{id}")
-    public String updateProduct(@PathVariable Long id, @Valid Product product, BindingResult result) {
+    public String updateProduct(@PathVariable Long id, @Valid Product product, BindingResult result, @RequestParam("image") MultipartFile imageFile) {
         if (result.hasErrors()) {
             product.setId(id); // set id to keep it in the form in case of errors
             return "/products/update-product";
         }
+
+        if (!imageFile.isEmpty()) {
+            try {
+                String imageName = saveImageStatic(imageFile);
+                product.setThumnail("/images/" + imageName);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
         productService.updateProduct(product);
         return "redirect:/products";
     }

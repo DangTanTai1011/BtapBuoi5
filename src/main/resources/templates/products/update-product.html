@@ -11,7 +11,7 @@
 <section layout:fragment="content" class="container mt-5">
   <h1>Edit Product</h1>
   <form th:action="@{/products/update/{id}(id=${product.id})}"
-        th:object="${product}" method="post" class="needs-validation" novalidate>
+        th:object="${product}" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
     <div class="mb-3">
       <label for="name" class="form-label">Name:</label>
       <input type="text" th:field="*{name}" class="form-control" id="name"
@@ -28,9 +28,12 @@
       <label for="category" class="form-label">Category:</label>
       <select th:field="*{category}" class="form-control" id="category">
         <option th:each="category : ${categories}"
-                th:value="${category.id}" th:text="${category.name}" th:selected="${category.id ==
-product.category.id}"></option>
+                th:value="${category.id}" th:text="${category.name}" th:selected="${category.id == product.category.id}"></option>
       </select>
+    </div>
+    <div class="mb-3">
+      <label for="image" class="form-label">Product Image:</label>
+      <input type="file" id="image" name="image" class="form-control"/>
     </div>
     <div class="mb-3">
       <label for="description" class="form-label">Description:</label>
